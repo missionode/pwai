@@ -4,7 +4,7 @@
  <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>Simple PWAI</title>
+	<title>Flash PWAi</title>
 	<link rel="canonical" href="https://simplepwa.com" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -55,25 +55,26 @@
  </head>
 
  <body>
-	<header>
-		<h1>PWAi Flash Clock</h1>
-	</header>
+	<div class="aura-ai">
+		<header>
+			<h1>FLASH</h1>
+		</header>
 
-	<div id="clock">--:--:--</div>
-	<div id="admin-section" class="hidden">
-		<div id="chart"></div>
-		<div id="controls">
-			<button style="background: #6488EA;" onclick="togglePause()">⏯ Pause/Resume</button>
-			<button style="background: #999999;" onclick="toggleMode()"> ᯓ Switch Mode (Linear/Exponential)</button>
-			<button style="background: #FF8C00;" onclick="enableRandomMode()"> ★✮⋆˙Random Mode</button>
-			<button style="background: rgb(254, 127, 254);" onclick="sleepMode()"> ᶻ 𝗓 𐰁Sleep Mode</button>
+		<div id="clock">--:--:--</div>
+		<div id="admin-section" class="hidden">
+			<div id="chart"></div>
+			<div id="controls">
+				<button style="background: #6488EA;" onclick="togglePause()">⏯ Pause/Resume</button>
+				<button style="background: #999999;" onclick="toggleMode()"> ᯓ Switch Mode (Linear/Exponential)</button>
+				<button style="background: #FF8C00;" onclick="enableRandomMode()"> ★✮⋆˙Random Mode</button>
+				<button style="background: rgb(254, 127, 254);" onclick="sleepMode()"> ᶻ 𝗓 𐰁Sleep Mode</button>
+			</div>
 		</div>
+		<footer>
+			<button style="background: #6488EA;" id="admin-btn">Admin</button>
+		</footer>
+
 	</div>
-	<footer>
-		<button style="background: #6488EA;" id="admin-btn">Admin</button>
-	</footer>
-
-
  </body>
 
  </html>

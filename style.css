@@ -3,28 +3,46 @@
 body {
     font-family: "Orbitron", sans-serif, Arial, sans-serif;
     text-align: center;
-    margin: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 100vh; /* Ensure container takes up full viewport height */
+    background-image: url(illustration-circle-with-abstract-neon-light-effects-great-futuristic-background.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
 }
+
+.aura-ai {
+
+}
+h1 {
+    color: white;
+    font-size: 3em;
+    font-weight: 600;
+}
+
 #clock {
     font-size: 3em;
     margin: 20px 0;
+    color: white;
 }
 #chart {
     width: 80%;
     height: 300px;
     margin: 20px auto;
-    border: 1px solid #ccc;
+    border: 1px solid #6488ea61;
+    border-radius: 3px;
+    box-shadow: 1px 2px 3px rgba(255, 255, 255, 0.681);
     position: relative;
 }
 .line {
     position: absolute;
     bottom: 0;
     height: 2px;
-    background: blue;
+    background: #6488EA;
 }
 #controls {
     margin-top: 20px;

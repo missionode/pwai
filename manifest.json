@@ -1,11 +1,11 @@
 {
 	"name": "PWAi",
-	"short_name": "PWAi the flash clock",
-	"display": "standalone",
+	"short_name": "Flash",
+	"display": "fullscreen",
 	"start_url": "./?utm_source=pwa_install",
 	"scope": ".",
-	"theme_color": "#fff",
-	"background_color": "#fff",
+	"theme_color": "#000",
+	"background_color": "#000",
 	"icons":[
         {
             "src": "android-chrome-36x36.png",
