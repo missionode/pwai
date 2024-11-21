@@ -1,37 +1,47 @@
-let wakeLockObj 
 
-// Request a screen wake lock:
-navigator.wakeLock.request('screen')
-.then(wakeLock => {
-    // Store the wake lock object for later use
-    wakeLockObj = wakeLock;
-
-    // Wake lock is active
-    console.log('Wake lock is active.');
-
-    // ... Your working code ...
-
-    // Release the wake lock when no longer needed
-    wakeLockObj.release();
-})
-.catch(err => {
-    // Handle error, e.g., user denied the request
-    console.error('Failed to acquire wake lock:', err);
-});
 
 // Sleep the clock
 
-function sleepMode() {
-    if (wakeLockObj) { // Check if wakeLockObj is defined
-        wakeLockObj.release()
-            .then(() => {
-                console.log('Wake lock released successfully.');
-            })
-            .catch(err => {
-                console.error('Error releasing wake lock:', err);
-            });
+    function GameMode() {
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Define alphabet pool
+        const randomLetters = generateRandomLetters(7); // Generate random 7 letters
+        const userWord = prompt(`Try to Create a word using these letters: ${randomLetters.join(", ")}`).toUpperCase();
+        
+        // Check if user's word is valid
+        if (isValidWord(userWord, randomLetters)) {
+            alert(`Good job! "${userWord}" is valid!`);
+        } else {
+            alert(`Oops! "${userWord}" is not valid. Try again!`);
+        }
     }
-}
+    
+    // Helper function: Generate random letters
+    // Alphabet gane
+    function generateRandomLetters(count) {
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const randomSet = [];
+        for (let i = 0; i < count; i++) {
+            const randomIndex = Math.floor(Math.random() * letters.length);
+            randomSet.push(letters[randomIndex]);
+        }
+        return randomSet;
+    }
+    
+    // Helper function: Check if word is valid
+    function isValidWord(word, lettersArray) {
+        const wordLetters = word.split("");
+        const availableLetters = [...lettersArray]; // Clone the array to avoid modification
+    
+        for (let letter of wordLetters) {
+            const index = availableLetters.indexOf(letter);
+            if (index === -1) {
+                return false; // Letter not found in available set
+            }
+            availableLetters.splice(index, 1); // Remove letter once used
+        }
+        return word.length > 0; // Ensure a word was entered
+    }
+
 
 
 

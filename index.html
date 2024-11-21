@@ -7,6 +7,7 @@
 	<title>Flash PWAi</title>
 	<link rel="canonical" href="https://simplepwa.com" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="author" href="humans.txt" />
 	
 	<!-- Icons and Colors -->
 	<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
@@ -45,11 +46,80 @@
 
 	<!-- Javscript -->
 	<script>
+		// Service worker
 		if ("serviceWorker" in navigator) {
 			window.addEventListener("load", () => {
 				navigator.serviceWorker && navigator.serviceWorker.register("./sw.js");
 			});
 		}
+		////////
+		/////////
+		// Wake up the app while driving 
+		// Function to request Wake Lock (with native and polyfill support)
+		let wakeLock = null;
+		let wakeLockInterval = null;
+
+		async function requestWakeLock() {
+			if ('wakeLock' in navigator) {
+				try {
+					wakeLock = await navigator.wakeLock.request('screen');
+					console.log('Wake Lock is active');
+					
+					// Reapply the Wake Lock if it is released
+					wakeLock.addEventListener('release', () => {
+						console.log('Wake Lock released');
+						requestWakeLock();
+					});
+				} catch (err) {
+					console.error(`Wake Lock request failed: ${err.name}, ${err.message}`);
+				}
+			} else {
+				// Polyfill for browsers without native Wake Lock API
+				console.warn('Wake Lock API not supported. Using polyfill.');
+				startWakeLockPolyfill();
+			}
+		}
+
+		// Polyfill to prevent sleep by simulating user interaction
+		function startWakeLockPolyfill() {
+			stopWakeLockPolyfill(); // Clear any existing intervals
+			wakeLockInterval = setInterval(() => {
+				console.log('Polyfill: Simulating user activity to prevent sleep.');
+				window.focus(); // Focus the window
+				document.body.dispatchEvent(new MouseEvent('mousemove')); // Simulate activity
+			}, 15000); // Every 15 seconds
+		}
+
+		function stopWakeLockPolyfill() {
+			if (wakeLockInterval) {
+				clearInterval(wakeLockInterval);
+				wakeLockInterval = null;
+			}
+		}
+
+		// Release the Wake Lock when the app becomes inactive
+		function releaseWakeLock() {
+			if (wakeLock) {
+				wakeLock.release();
+				wakeLock = null;
+			}
+			stopWakeLockPolyfill();
+			console.log('Wake Lock released or Polyfill stopped.');
+		}
+
+		// Request Wake Lock when the page loads
+		document.addEventListener('visibilitychange', () => {
+			if (document.visibilityState === 'visible') {
+				requestWakeLock();
+			} else {
+				releaseWakeLock();
+			}
+		});
+
+		// Request Wake Lock immediately on page load
+		requestWakeLock();
+
+
 	</script>
 	<script defer src="./main.js"></script>
  </head>
@@ -67,7 +137,7 @@
 				<button style="background: #6488EA;" onclick="togglePause()">⏯ Pause/Resume</button>
 				<button style="background: #999999;" onclick="toggleMode()"> ᯓ Switch Mode (Linear/Exponential)</button>
 				<button style="background: #FF8C00;" onclick="enableRandomMode()"> ★✮⋆˙Random Mode</button>
-				<button style="background: rgb(254, 127, 254);" onclick="sleepMode()"> ᶻ 𝗓 𐰁Sleep Mode</button>
+				<button style="background: rgb(254, 127, 254);" onclick="GameMode()"> ᶻ 𝗓 𐰁Sleep Mode</button>
 			</div>
 		</div>
 		<footer>
